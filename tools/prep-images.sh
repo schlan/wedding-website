@@ -39,8 +39,7 @@ done
 TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 for spec in \
-  "hero-couple-garden:couple-garden:150 360 900 1100:600 900" \
-  "hero-couple-boat:couple-boat:420 90 700 700:320 480"
+  "hero-couple-garden:couple-garden:150 360 900 1100:600 900"
 do
   name=${spec%%:*}; rest=${spec#*:}
   src="$SRC/${rest%%:*}.jpg"; rest=${rest#*:}

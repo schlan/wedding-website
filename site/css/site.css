@@ -107,11 +107,6 @@ section[id], #top { scroll-margin-top: 12px; }
   border-radius: 160px 160px 18px 18px; border: 6px solid #fff; box-shadow: 0 6px 24px rgba(60, 70, 40, .18);
   background: var(--sage-tint);
 }
-.hero__inset { position: absolute; left: -10px; bottom: 70px; width: 112px; height: 112px; transform: rotate(-5deg); }
-.hero__inset img {
-  width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 5px solid #fff;
-  box-shadow: 0 6px 20px rgba(60, 70, 40, .22); background: var(--sage-tint);
-}
 .hero__text { position: relative; margin-top: -40px; display: flex; flex-direction: column; align-items: center; }
 .garland { width: 300px; max-width: 100%; height: auto; }
 .hero__greeting { margin-top: 14px; font-style: italic; font-size: 20px; color: var(--sage); transition: opacity .4s ease; }
@@ -266,7 +261,6 @@ textarea.input { padding: 12px; resize: vertical; min-height: 96px; }
 /* Very small phones: a little more room for the RSVP chips */
 @media (max-width: 359px) {
   :root { --gutter: 14px; }
-  .hero__inset { left: 4px; width: 100px; height: 100px; }
   .rsvp-card { padding: 20px 16px 18px; }
 }
 
@@ -300,8 +294,6 @@ textarea.input { padding: 12px; resize: vertical; min-height: 96px; }
   .hero__photo { flex: 0 1 400px; }
   /* Capped at 460px tall so the 864×575 photo isn't stretched (brief §4). */
   .hero__frame { width: 100%; max-width: 380px; }
-  .hero__inset { left: -44px; bottom: 80px; width: 150px; height: 150px; }
-  .hero__inset img { border-width: 6px; }
   .arch { width: 100%; height: 460px; border-radius: 190px 190px 24px 24px; border-width: 8px; box-shadow: 0 10px 40px rgba(60, 70, 40, .18); }
   .hero__text { flex: 1 1 420px; margin-top: 0; align-items: flex-start; }
   .garland { width: 260px; }
