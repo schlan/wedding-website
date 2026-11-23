@@ -25,7 +25,7 @@ var LABELS = {
   departure_day: { sun: '6 June (Sun)', mon: '7 June (Mon)' },
   travel_mode: { fly: 'Flying', train: 'Train', drive: 'Driving' },
   airport: { psa: 'Pisa airport', flr: 'Florence airport' },
-  station: { smf: 'San Miniato-Fucecchio', granaiolo: 'Granaiolo' },
+  station: { pisa_centrale: 'Pisa Centrale', firenze_smn: 'Florence S.M. Novella', smf: 'San Miniato-Fucecchio', granaiolo: 'Granaiolo' },
   pizza: { yes: 'Yes', later: 'Arriving later' },
   wine: { yes: 'Yes', maybe: 'Maybe', no: 'No' },
   diet: { any: 'Anything goes', vegetarian: 'Vegetarian', vegan: 'Vegan', gluten_free: 'Gluten-free', other: 'Other' }
@@ -447,7 +447,7 @@ function buildSummary(sh) {
   gap();
 
   title('PICK-UPS (people)');
-  [['airport', 'psa'], ['airport', 'flr'], ['station', 'smf'], ['station', 'granaiolo']].forEach(function (pl) {
+  [['airport', 'psa'], ['airport', 'flr'], ['station', 'pisa_centrale'], ['station', 'firenze_smn'], ['station', 'smf'], ['station', 'granaiolo']].forEach(function (pl) {
     line(LABELS[pl[0]][pl[1]], '=SUMIFS(' + col('n_people') + ',' + col('pickup') + ',TRUE,' + col(pl[0]) + ',' + q(LABELS[pl[0]][pl[1]]) + ')');
   });
   line('Full pick-up list', '→ see columns H–L');
