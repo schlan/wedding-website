@@ -14,7 +14,7 @@
 // Settings and vocabularies
 // ---------------------------------------------------------------------------
 var SHEETS = { guests: 'Guests', settings: 'Settings', responses: 'Responses', latest: 'Latest', summary: 'Summary' };
-var GUEST_HEADERS = ['code', 'household', 'guest_id', 'name', 'child', 'lang', 'invite_url', 'notes'];
+var GUEST_HEADERS = ['code', 'household', 'guest_id', 'name', 'child', 'lang', 'invite_url', 'notes', 'plus_one'];
 var MAX_ADDED = 6;
 var MAX_TEXT = 500;
 var CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789'; // no 0 O o 1 l I
@@ -32,7 +32,7 @@ var LABELS = {
 };
 
 var FLAT_HEADERS = [
-  'status', 'attending_names', 'not_attending_names', 'n_adults', 'n_kids', 'n_people',
+  'status', 'attending_names', 'not_attending_names', 'n_adults', 'n_kids', 'n_people', 'n_plus_ones',
   'arrival_day', 'arrival_time', 'departure_day',
   'travel_mode', 'airport', 'station', 'pickup', 'travel_details',
   'pizza', 'pizza_people', 'wine', 'wine_people', 'wine_maybe_people',
@@ -82,7 +82,7 @@ function lookupGuest(code) {
     ok: true,
     household: h.household,
     lang: h.lang,
-    guests: h.guests.map(function (g) { return { id: g.id, name: g.name, child: g.child }; }),
+    guests: h.guests.map(function (g) { var o = { id: g.id, name: g.name, child: g.child }; if (g.plus_one) o.plus_one = true; return o; }),
     response: latestPayload(code)
   };
 }
@@ -98,7 +98,11 @@ function findHousehold(code) {
     household: String(mine[0].household || '').trim(),
     lang: String(mine[0].lang || '').trim().toLowerCase() === 'de' ? 'de' : 'en',
     guests: mine.map(function (r) {
-      return { id: String(r.guest_id).trim(), name: String(r.name).trim(), child: r.child === true || String(r.child).toUpperCase() === 'TRUE' };
+      return {
+        id: String(r.guest_id).trim(), name: String(r.name).trim(),
+        child: r.child === true || String(r.child).toUpperCase() === 'TRUE',
+        plus_one: r.plus_one === true || String(r.plus_one).toUpperCase() === 'TRUE'
+      };
     })
   };
 }
@@ -148,29 +152,39 @@ function validatePayload(p, h) {
   h.guests.forEach(function (g) { known[g.id] = g; });
   if (!Array.isArray(p.guests) || !p.guests.length) return null;
 
-  var seen = {}, added = 0, guests = [];
+  var seen = {}, added = 0, plusOnes = {}, guests = [];
   for (var i = 0; i < p.guests.length; i++) {
     var g = p.guests[i] || {};
     var isAdded = g.added === true;
-    if (isAdded) {
+    var plusOf = isAdded && g.plus_one_of ? String(g.plus_one_of) : null;
+    if (plusOf) {
+      // Only someone ticked in Guests → plus_one may bring one, and only one.
+      if (!known[plusOf] || !known[plusOf].plus_one || plusOnes[plusOf]) return null;
+      plusOnes[plusOf] = true;
+    } else if (isAdded) {
       if (++added > MAX_ADDED) return null;
     } else if (!known[g.id] || seen[g.id]) {
       return null;
     }
-    seen[g.id] = true;
+    if (!isAdded) seen[g.id] = true;
     if (typeof g.attending !== 'boolean') return null;
     var name = isAdded ? text(g.name, 100) : known[g.id].name;
-    if (!name) return null;
+    if (!name && !plusOf) return null; // a plus one's name is optional
     var diet = g.attending ? g.diet : null;
     if (g.attending && !LABELS.diet[diet]) return null;
     guests.push({
-      id: isAdded ? 'added-' + added : g.id, name: name, child: isAdded ? g.child !== false : known[g.id].child,
-      added: isAdded || undefined, attending: g.attending, diet: diet,
+      id: plusOf ? 'plus-' + plusOf : (isAdded ? 'added-' + added : g.id), name: name,
+      child: plusOf ? false : (isAdded ? g.child !== false : known[g.id].child),
+      added: isAdded || undefined, plus_one_of: plusOf || undefined, attending: g.attending, diet: diet,
       diet_other: diet === 'other' ? text(g.diet_other) : ''
     });
   }
   // Every invited person must have an answer.
   for (var id in known) if (!seen[id]) return null;
+  // A plus one comes with their inviter.
+  for (var inviter in plusOnes) {
+    if (!guests.some(function (x) { return x.id === inviter && x.attending; })) return null;
+  }
 
   var anyone = guests.some(function (g) { return g.attending; });
   var out = { code: String(p.code), lang: p.lang === 'de' ? 'de' : 'en', guests: guests, email: text(p.email, 200), note: text(p.note) };
@@ -204,6 +218,15 @@ function text(v, max) {
 
 /** Turns a clean payload into the readable columns used by Latest/Responses. */
 function flatten(p, h) {
+  var nameOf = function (g) {
+    if (g.name) return g.name;
+    var inviter = p.guests.filter(function (x) { return x.id === g.plus_one_of; })[0];
+    return 'Plus one of ' + (inviter ? inviter.name : '?');
+  };
+  var inviterName = function (g) {
+    var inviter = p.guests.filter(function (x) { return x.id === g.plus_one_of; })[0];
+    return inviter ? inviter.name : '?';
+  };
   var yes = p.guests.filter(function (g) { return g.attending; });
   var no = p.guests.filter(function (g) { return !g.attending; });
   var nAdults = yes.filter(function (g) { return !g.child; }).length;
@@ -213,9 +236,13 @@ function flatten(p, h) {
   var dietCount = function (d) { return yes.filter(function (g) { return g.diet === d; }).length; };
   var f = {
     status: !n ? 'not coming' : (no.length ? 'partly' : 'coming'),
-    attending_names: yes.map(function (g) { return g.name + (g.child ? ' (child)' : ''); }).join(', '),
-    not_attending_names: no.map(function (g) { return g.name; }).join(', '),
+    attending_names: yes.map(function (g) {
+      if (g.plus_one_of) return g.name ? g.name + ' (plus one of ' + inviterName(g) + ')' : nameOf(g);
+      return g.name + (g.child ? ' (child)' : '');
+    }).join(', '),
+    not_attending_names: no.map(nameOf).join(', '),
     n_adults: nAdults, n_kids: nKids, n_people: n,
+    n_plus_ones: yes.filter(function (g) { return g.plus_one_of; }).length,
     arrival_day: lbl('arrival_day'), arrival_time: lbl('arrival_time'), departure_day: lbl('departure_day'),
     travel_mode: lbl('travel_mode'), airport: lbl('airport'), station: lbl('station'),
     pickup: p.pickup === true ? true : (p.pickup === false ? false : ''),
@@ -224,8 +251,8 @@ function flatten(p, h) {
     wine: lbl('wine'), wine_people: p.wine === 'yes' ? n : 0, wine_maybe_people: p.wine === 'maybe' ? n : 0,
     diet_any: dietCount('any'), diet_vegetarian: dietCount('vegetarian'), diet_vegan: dietCount('vegan'),
     diet_gluten_free: dietCount('gluten_free'), diet_other: dietCount('other'),
-    diet_other_text: yes.filter(function (g) { return g.diet === 'other' && g.diet_other; }).map(function (g) { return g.name + ': ' + g.diet_other; }).join('; '),
-    diets_detail: yes.map(function (g) { return g.name + ': ' + LABELS.diet[g.diet]; }).join('; '),
+    diet_other_text: yes.filter(function (g) { return g.diet === 'other' && g.diet_other; }).map(function (g) { return nameOf(g) + ': ' + g.diet_other; }).join('; '),
+    diets_detail: yes.map(function (g) { return nameOf(g) + ': ' + LABELS.diet[g.diet]; }).join('; '),
     allergies: p.allergies || '',
     fridge_wishes: p.fridge_wishes || '', email: p.email || '', note: p.note || '', lang: p.lang
   };
@@ -314,6 +341,7 @@ function setupSheet() {
   };
   var guests = ensure(SHEETS.guests, GUEST_HEADERS);
   guests.getRange('E2:E').insertCheckboxes();
+  guests.getRange('I2:I').insertCheckboxes(); // plus_one
   guests.getRange('F2:F').setDataValidation(SpreadsheetApp.newDataValidation().requireValueInList(['en', 'de'], true).setAllowInvalid(false).build());
   guests.setColumnWidth(7, 320);
 
@@ -426,6 +454,7 @@ function buildSummary(sh) {
   line('People coming', '=SUM(' + col('n_people') + ')');
   line('  adults', '=SUM(' + col('n_adults') + ')');
   line('  kids', '=SUM(' + col('n_kids') + ')');
+  line('  of whom plus ones', '=SUM(' + col('n_plus_ones') + ')');
   gap();
 
   title('ARRIVALS (people)');

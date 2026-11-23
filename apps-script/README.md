@@ -28,6 +28,7 @@ About 10 minutes, no coding. You need a Google account. The Sheet stays private 
    | `child` | Tick for children |
    | `lang` | `en` or `de` (the language the site opens in for them) |
    | `notes` | Anything for yourselves |
+   | `plus_one` | Tick if this person may bring a plus one. The RSVP then asks them "Bringing a plus one?" (the name is optional). |
 
    Leave `code`, `guest_id` and `invite_url` empty.
 3. Menu **Wedding → Fill in codes & links**. Each household gets a private code, and `invite_url` shows its personal link. Send that link to the household.
