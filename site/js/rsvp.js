@@ -333,7 +333,7 @@ function step3() {
       ["airport", "station", "pickup"].forEach(clearError);
     }),
     s.travel_mode === "fly" ? choice("airport", t("rsvp.s3.airport"), [["psa", t("rsvp.s3.psa")], ["flr", t("rsvp.s3.flr")]], s.airport, (v) => { s.airport = v; }) : null,
-    s.travel_mode === "train" ? choice("station", t("rsvp.s3.station"), [["smf", t("rsvp.s3.smf")], ["granaiolo", t("rsvp.s3.granaiolo")]], s.station, (v) => { s.station = v; }) : null,
+    s.travel_mode === "train" ? choice("station", t("rsvp.s3.station"), ["pisa_centrale", "firenze_smn", "smf", "granaiolo"].map((v) => [v, t(`rsvp.s3.${v}`)]), s.station, (v) => { s.station = v; }) : null,
     moving ? choice("pickup", t("rsvp.s3.pickup"), [[true, t("rsvp.s3.pickupYes")], [false, t("rsvp.s3.pickupNo")]], s.pickup, (v) => { s.pickup = v; }) : null,
     moving ? textInput("travel_details", t("rsvp.s3.details"), s.travel_details, (v) => { s.travel_details = v; }, { placeholder: t("rsvp.s3.detailsPlaceholder"), autocomplete: "off" }) : null,
   ];

@@ -81,6 +81,10 @@
       "title": "Bahnhof Granaiolo",
       "text": "Der nächste Bahnhof zur Villa, etwa 13 Minuten mit dem Auto. Umsteigen in Empoli."
     },
+    "mainStations": {
+      "title": "Pisa Centrale oder Florenz S. M. Novella",
+      "text": "Ihr kommt mit dem Zug von weiter weg? Wir holen euch auch an einem der beiden Hauptbahnhöfe ab."
+    },
     "carHire": "Lust auf Ausflüge? Ein Mietwagen lohnt sich: Florenz, Pisa, Lucca, Volterra und San Gimignano sind gut erreichbar.",
     "maps": "In Google Maps öffnen",
     "mapFlorence": "Florenz"
@@ -140,6 +144,8 @@
       "psa": "Pisa",
       "flr": "Florenz",
       "station": "Wir kommen an am Bahnhof",
+      "pisa_centrale": "Pisa Centrale",
+      "firenze_smn": "Florenz S. M. Novella",
       "smf": "San Miniato-Fucecchio",
       "granaiolo": "Granaiolo",
       "pickup": "Sollen wir euch abholen?",
