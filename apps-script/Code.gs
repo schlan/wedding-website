@@ -31,20 +31,14 @@ var LABELS = {
   diet: { any: 'Anything goes', vegetarian: 'Vegetarian', vegan: 'Vegan', gluten_free: 'Gluten-free', other: 'Other' }
 };
 
-var FRIDGE = [
-  ['coffee', 'Coffee'], ['tea', 'Tea'], ['cereal', 'Cereal'], ['yoghurt', 'Yoghurt'], ['eggs', 'Eggs'], ['pastries', 'Pastries'], ['fruit', 'Fruit'],
-  ['cows_milk', "Cow's milk"], ['oat_milk', 'Oat milk'], ['soy_milk', 'Soy milk'], ['lactose_free', 'Lactose-free'],
-  ['beer', 'Beer'], ['wine', 'Wine'], ['prosecco', 'Prosecco'], ['soft_drinks', 'Soft drinks'], ['sparkling_water', 'Sparkling water'], ['juice', 'Juice'],
-  ['crisps', 'Crisps'], ['chocolate', 'Chocolate'], ['nuts', 'Nuts'], ['kids_snacks', "Kids' snacks"]
-];
-
 var FLAT_HEADERS = [
   'status', 'attending_names', 'not_attending_names', 'n_adults', 'n_kids', 'n_people',
   'arrival_day', 'arrival_time', 'departure_day',
   'travel_mode', 'airport', 'station', 'pickup', 'travel_details',
   'pizza', 'pizza_people', 'wine', 'wine_people', 'wine_maybe_people',
-  'diet_any', 'diet_vegetarian', 'diet_vegan', 'diet_gluten_free', 'diet_other', 'diet_other_text', 'diets_detail', 'allergies'
-].concat(FRIDGE.map(function (f) { return 'fridge_' + f[0]; })).concat(['fridge_other', 'email', 'note', 'lang']);
+  'diet_any', 'diet_vegetarian', 'diet_vegan', 'diet_gluten_free', 'diet_other', 'diet_other_text', 'diets_detail', 'allergies',
+  'fridge_wishes', 'email', 'note', 'lang'
+];
 
 var LATEST_HEADERS = ['updated', 'code', 'household'].concat(FLAT_HEADERS);
 var RESPONSES_HEADERS = ['timestamp', 'code', 'household', 'payload_json'].concat(FLAT_HEADERS);
@@ -183,9 +177,8 @@ function validatePayload(p, h) {
   if (out.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(out.email)) return null;
 
   if (!anyone) {
-    ['arrival_day', 'arrival_time', 'departure_day', 'travel_mode', 'airport', 'station', 'pickup', 'travel_details', 'pizza', 'wine', 'allergies', 'fridge_other']
+    ['arrival_day', 'arrival_time', 'departure_day', 'travel_mode', 'airport', 'station', 'pickup', 'travel_details', 'pizza', 'wine', 'allergies', 'fridge_wishes']
       .forEach(function (k) { out[k] = null; });
-    out.fridge = [];
     return out;
   }
 
@@ -200,10 +193,7 @@ function validatePayload(p, h) {
   if (moving && typeof out.pickup !== 'boolean') return null;
   out.travel_details = moving ? text(p.travel_details) : '';
   out.allergies = text(p.allergies);
-  var validFridge = {};
-  FRIDGE.forEach(function (f) { validFridge[f[0]] = true; });
-  out.fridge = (Array.isArray(p.fridge) ? p.fridge : []).filter(function (f, idx, arr) { return validFridge[f] && arr.indexOf(f) === idx; });
-  out.fridge_other = text(p.fridge_other);
+  out.fridge_wishes = text(p.fridge_wishes);
   return out;
 }
 
@@ -237,9 +227,8 @@ function flatten(p, h) {
     diet_other_text: yes.filter(function (g) { return g.diet === 'other' && g.diet_other; }).map(function (g) { return g.name + ': ' + g.diet_other; }).join('; '),
     diets_detail: yes.map(function (g) { return g.name + ': ' + LABELS.diet[g.diet]; }).join('; '),
     allergies: p.allergies || '',
-    fridge_other: p.fridge_other || '', email: p.email || '', note: p.note || '', lang: p.lang
+    fridge_wishes: p.fridge_wishes || '', email: p.email || '', note: p.note || '', lang: p.lang
   };
-  FRIDGE.forEach(function (item) { f['fridge_' + item[0]] = (p.fridge || []).indexOf(item[0]) >= 0; });
   return f;
 }
 
@@ -310,6 +299,14 @@ function setupSheet() {
   var ensure = function (name, headers) {
     var sh = ss.getSheetByName(name) || ss.insertSheet(name);
     if (headers) {
+      var width = Math.max(sh.getLastColumn(), headers.length);
+      var old = width ? sh.getRange(1, 1, 1, width).getValues()[0].map(String) : [];
+      var same = old.join('|').replace(/\|+$/, '') === headers.join('|');
+      if (!same && old.some(Boolean) && sh.getLastRow() > 1 && name !== SHEETS.guests && name !== SHEETS.settings) {
+        throw new Error('The "' + name + '" tab has answers saved in an older column layout. ' +
+          'If they are only test RSVPs, delete those rows (keep row 1) and run Set up sheet again. Otherwise ask for help before continuing.');
+      }
+      if (width > headers.length) sh.getRange(1, headers.length + 1, 1, width - headers.length).clearContent();
       sh.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight('bold').setBackground('#E4E8D6');
       sh.setFrozenRows(1);
     }
@@ -398,7 +395,7 @@ function testSubmit() {
       .concat([{ added: true, name: 'Test child', child: true, attending: true, diet: 'other', diet_other: 'no nuts' }]),
     arrival_day: 'thu', arrival_time: 'afternoon', departure_day: 'mon',
     travel_mode: 'fly', airport: 'flr', station: null, pickup: true, travel_details: 'TEST 123, lands 14:35',
-    pizza: 'yes', wine: 'maybe', allergies: 'Test: nuts', fridge: ['coffee', 'oat_milk'], fridge_other: 'test', email: '', note: 'This is a test RSVP. Delete its rows in Responses and Latest.'
+    pizza: 'yes', wine: 'maybe', allergies: 'Test: nuts', fridge_wishes: 'Test: oat milk, coffee', email: '', note: 'This is a test RSVP. Delete its rows in Responses and Latest.'
   };
   var res = handleSubmit(payload);
   notify('Test RSVP for "' + h.household + '": ' + JSON.stringify(res) +
@@ -467,9 +464,9 @@ function buildSummary(sh) {
   line('Allergies', '=TEXTJOIN("; ",TRUE,ARRAYFORMULA(IF(' + col('allergies') + '="","",' + col('household') + '&": "&' + col('allergies') + ')))');
   gap();
 
-  title('FRIDGE SHOPPING LIST (households)');
-  FRIDGE.forEach(function (f) { line(f[1], '=COUNTIF(' + col('fridge_' + f[0]) + ',TRUE)'); });
-  line('Other requests', '=TEXTJOIN("; ",TRUE,ARRAYFORMULA(IF(' + col('fridge_other') + '="","",' + col('household') + '&": "&' + col('fridge_other') + ')))');
+  title('FRIDGE');
+  line('Households with wishes', '=COUNTIF(' + col('fridge_wishes') + ',"?*")');
+  line('Full list of wishes', '→ see columns N–O');
 
   sh.getRange(1, 1, rows.length, 6).setValues(rows.map(function (r) { return r.map(function (c) { return typeof c === 'string' && c.charAt(0) === '=' ? '' : c; }); }));
   rows.forEach(function (r, ri) {
@@ -482,6 +479,11 @@ function buildSummary(sh) {
   sh.getRange('H2').setFormula(
     '=IFERROR(SORT(FILTER({' + col('household') + ',' + place + ',' + col('arrival_day') + ',' + col('arrival_time') + ',' +
     col('n_people') + '&" people · "&' + col('travel_details') + '},' + col('pickup') + '=TRUE),3,TRUE),"No pick-ups yet")');
+  // Fridge wishes in columns N–O.
+  sh.getRange('N1:O1').setValues([['FRIDGE WISHES', 'Wishes']]).setFontWeight('bold').setBackground('#E4E8D6');
+  sh.getRange('N2').setFormula('=IFERROR(FILTER({' + col('household') + ',' + col('fridge_wishes') + '},' + col('fridge_wishes') + '<>""),"No wishes yet")');
+  sh.setColumnWidth(14, 180);
+  sh.setColumnWidth(15, 360);
   sh.setColumnWidth(1, 220);
   sh.setColumnWidths(2, 5, 150);
   sh.setColumnWidth(8, 180);

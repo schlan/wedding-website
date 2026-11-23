@@ -53,6 +53,8 @@ About 10 minutes, no coding. You need a Google account. The Sheet stays private 
 
 ## Changing the script later
 
+If a new version changes the columns, **Set up sheet** stops with a message when Latest or Responses still hold rows in the old layout. Delete those rows if they're only tests (keep row 1), then run it again.
+
 Saving isn't enough. After pasting a new version of `Code.gs`:
 **Deploy → Manage deployments → pencil icon → Version: New version → Deploy.** The URL stays the same, so `config.js` doesn't change.
 
@@ -63,7 +65,7 @@ If you add columns or the Summary looks broken, run **Wedding → Set up sheet**
 - **Guests**: your list (you edit it).
 - **Responses**: every submission ever made, newest at the bottom, including the full answer (`payload_json`). Don't edit.
 - **Latest**: one row per household with its current answers. Overwritten when a household changes its RSVP. Don't edit.
-- **Summary**: headcounts, arrivals and departures, pick-ups (full list in columns H–L), pizza and wine numbers, diets and allergies, and the fridge shopping list. Formulas only.
+- **Summary**: headcounts, arrivals and departures, pick-ups (full list in columns H–L), pizza and wine numbers, diets and allergies, and everyone's fridge wishes (columns N–O). Formulas only.
 
 ## Privacy
 
