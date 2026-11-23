@@ -80,6 +80,10 @@
       "title": "Granaiolo station",
       "text": "The closest station to the villa, about 13 minutes by car. Change at Empoli."
     },
+    "mainStations": {
+      "title": "Pisa Centrale or Florence S.M. Novella",
+      "text": "Coming by train from further away? We can pick you up from either main station too."
+    },
     "carHire": "Fancy exploring? A hire car is a great idea: Florence, Pisa, Lucca, Volterra and San Gimignano are all within easy reach.",
     "maps": "Open in Google Maps",
     "mapFlorence": "Florence"
@@ -134,6 +138,8 @@
       "psa": "Pisa",
       "flr": "Florence",
       "station": "Arriving at the station",
+      "pisa_centrale": "Pisa Centrale",
+      "firenze_smn": "Florence S.M. Novella",
       "smf": "San Miniato-Fucecchio",
       "granaiolo": "Granaiolo",
       "pickup": "Shall we pick you up?",
