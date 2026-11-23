@@ -27,7 +27,7 @@ export function rerender() { if (s) render(); }
 // ---- State ------------------------------------------------------------------
 function initialState(guests, r) {
   const st = {
-    guests: guests.map((g) => ({ id: g.id, name: g.name, child: !!g.child, attending: null, diet: null, diet_other: "" })),
+    guests: guests.map((g) => ({ id: g.id, name: g.name, child: !!g.child, plusOneAllowed: !!g.plus_one, bringing: null, attending: null, diet: null, diet_other: "" })),
     arrival_day: null, arrival_time: null, departure_day: null,
     travel_mode: null, airport: null, station: null, pickup: null, travel_details: "",
     pizza: null, pizzaAuto: false, wine: null,
@@ -39,8 +39,17 @@ function initialState(guests, r) {
     const prev = (r.guests || []).find((x) => x.id === g.id);
     if (prev) Object.assign(g, { attending: prev.attending ?? null, diet: prev.diet ?? null, diet_other: prev.diet_other || "" });
   }
-  for (const prev of (r.guests || []).filter((x) => x.added)) {
+  for (const prev of (r.guests || []).filter((x) => x.added && !x.plus_one_of)) {
     st.guests.push({ id: `new-${++addCounter}`, added: true, name: prev.name || "", child: prev.child !== false, attending: prev.attending ?? true, diet: prev.diet ?? null, diet_other: prev.diet_other || "" });
+  }
+  for (const g of st.guests.filter((x) => x.plusOneAllowed)) {
+    const prev = (r.guests || []).find((x) => x.plus_one_of === g.id);
+    if (prev) {
+      g.bringing = true;
+      st.guests.push(plusOneFor(g, { name: prev.name || "", diet: prev.diet ?? null, diet_other: prev.diet_other || "" }));
+    } else if (g.attending === true) {
+      g.bringing = false;
+    }
   }
   for (const k of ["arrival_day", "arrival_time", "departure_day", "travel_mode", "airport", "station", "pickup", "pizza", "wine"]) {
     if (r[k] !== undefined) st[k] = r[k];
@@ -49,14 +58,35 @@ function initialState(guests, r) {
   return st;
 }
 
+function plusOneFor(inviter, extra = {}) {
+  return { id: `plus-${inviter.id}`, added: true, plusOneOf: inviter.id, name: "", child: false, attending: true, diet: null, diet_other: "", ...extra };
+}
+/** Adds or removes an inviter's plus-one entry to match their answer. */
+function setBringing(g, value) {
+  g.bringing = value;
+  s.guests = s.guests.filter((x) => x.plusOneOf !== g.id);
+  if (value === true) {
+    const i = s.guests.indexOf(g);
+    s.guests.splice(i + 1, 0, plusOneFor(g));
+  }
+}
+
 const coming = () => s.guests.filter((g) => g.attending === true);
 const nobodyComing = () => s.guests.length > 0 && s.guests.every((g) => g.attending === false);
-const displayName = (g) => (g.name || "").trim() || t("rsvp.s1.littleOne");
+function displayName(g) {
+  const name = (g.name || "").trim();
+  if (name) return name;
+  if (g.plusOneOf) {
+    const inviter = s.guests.find((x) => x.id === g.plusOneOf);
+    return t("rsvp.s1.plusOneOf", { name: inviter ? inviter.name : "" });
+  }
+  return t("rsvp.s1.littleOne");
+}
 
 function payload() {
   const anyone = coming().length > 0;
   const guests = s.guests.map((g) => ({
-    id: g.id, name: g.name.trim(), child: g.child, ...(g.added ? { added: true } : {}),
+    id: g.id, name: g.name.trim(), child: g.child, ...(g.added ? { added: true } : {}), ...(g.plusOneOf ? { plus_one_of: g.plusOneOf } : {}),
     attending: g.attending,
     diet: g.attending ? g.diet : null,
     diet_other: g.attending && g.diet === "other" ? g.diet_other.trim() : "",
@@ -84,8 +114,9 @@ function missingFor(step) {
   const m = [];
   if (step === 1) {
     for (const g of s.guests) {
-      if (g.added && !g.name.trim()) m.push(`name:${g.id}`);
+      if (g.added && !g.plusOneOf && !g.name.trim()) m.push(`name:${g.id}`);
       if (g.attending === null) m.push(`att:${g.id}`);
+      if (g.plusOneAllowed && g.attending === true && g.bringing === null) m.push(`plus:${g.id}`);
     }
   } else if (step === 2) {
     if (!s.arrival_day) m.push("arrival_day");
@@ -225,12 +256,24 @@ function stepHeading(text) {
   return h("h3", { class: "step__title", tabindex: "-1", "data-heading": "" }, text);
 }
 
+function plusOneBlock(g) {
+  if (!g.plusOneAllowed || g.attending !== true) return null;
+  const p = s.guests.find((x) => x.plusOneOf === g.id);
+  return h("div", { class: "plus-one" },
+    choice(`plus:${g.id}`, t("rsvp.s1.plusOneQ"), [[true, t("rsvp.s1.plusOneYes")], [false, t("rsvp.s1.plusOneNo")]], g.bringing,
+      (v) => setBringing(g, v), { small: true }),
+    p ? textInput(`pname:${g.id}`, t("rsvp.s1.plusOneName"), p.name, (v) => { p.name = v; }, { autocomplete: "off" }) : null);
+}
+
 function step1() {
-  const rows = s.guests.map((g) => {
+  const rows = s.guests.filter((g) => !g.plusOneOf).map((g) => {
     const att = choice(`att:${g.id}`, displayName(g),
-      [[true, t("rsvp.yes")], [false, t("rsvp.no")]], g.attending, (v) => { g.attending = v; },
+      [[true, t("rsvp.yes")], [false, t("rsvp.no")]], g.attending, (v) => {
+        g.attending = v;
+        if (v !== true && g.plusOneAllowed) { setBringing(g, null); clearError(`plus:${g.id}`); }
+      },
       { labelClass: g.added ? "sr-only" : "person__name" });
-    if (!g.added) return h("div", { class: "person" }, att);
+    if (!g.added) return h("div", { class: "person" }, att, plusOneBlock(g));
     const nameMissing = ui.errors.has(`name:${g.id}`);
     return h("div", { class: "person" },
       h("div", { class: "added-row" },
@@ -250,7 +293,7 @@ function step1() {
         }, "×")),
       att);
   });
-  const addedCount = s.guests.filter((g) => g.added).length;
+  const addedCount = s.guests.filter((g) => g.added && !g.plusOneOf).length;
   return [
     stepHeading(t("rsvp.s1.title")),
     h("p", { class: "step__intro" }, t("rsvp.s1.intro")),

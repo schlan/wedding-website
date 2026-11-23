@@ -50,6 +50,10 @@ const MOCK = {
     { id: "g5", name: "Jonas", child: false },
   ] },
   solo: { household: "Tom", lang: "en", guests: [{ id: "g6", name: "Tom", child: false }] },
+  plus: { household: "Tom & Lea", lang: "en", guests: [
+    { id: "g8", name: "Tom", child: false, plus_one: true },
+    { id: "g9", name: "Lea", child: false },
+  ] },
   sendfail: { household: "Send-fail test", lang: "en", guests: [{ id: "g7", name: "Pat", child: false }] },
 };
 

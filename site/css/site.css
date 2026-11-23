@@ -182,6 +182,8 @@ section[id], #top { scroll-margin-top: 12px; }
 .box { padding: 14px; border-radius: 18px; background: var(--bg); }
 .person { padding: 14px 0 0; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px; }
 .person__name { font-size: 19px; font-weight: 500; }
+.plus-one { display: flex; flex-direction: column; gap: 10px; margin-left: 4px; padding: 4px 0 2px 14px; border-left: 2px solid var(--sage-tint); }
+.plus-one .field__label { font-size: 16px; font-weight: 400; color: var(--muted); }
 .added-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; }
 .added-row .input-label { flex: 1 1 160px; }
 .check { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; font-size: 16px; cursor: pointer; }

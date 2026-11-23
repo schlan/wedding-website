@@ -114,7 +114,12 @@
       "remove": "{name} entfernen",
       "removeUnnamed": "Diese Person entfernen",
       "littleOne": "Kind",
-      "nameMissing": "Bitte gebt einen Namen ein"
+      "nameMissing": "Bitte gebt einen Namen ein",
+      "plusOneQ": "Bringst du eine Begleitung mit?",
+      "plusOneYes": "Ja, mit Begleitung",
+      "plusOneNo": "Nur ich",
+      "plusOneName": "Name der Begleitung (falls schon bekannt)",
+      "plusOneOf": "Begleitung von {name}"
     },
     "s2": {
       "title": "Wann kommt ihr?",

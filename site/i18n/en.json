@@ -113,7 +113,12 @@
       "remove": "Remove {name}",
       "removeUnnamed": "Remove this person",
       "littleOne": "Little one",
-      "nameMissing": "Please add a name"
+      "nameMissing": "Please add a name",
+      "plusOneQ": "Bringing a plus one?",
+      "plusOneYes": "Yes, bringing someone",
+      "plusOneNo": "Just me",
+      "plusOneName": "Their name (if you know it yet)",
+      "plusOneOf": "{name}'s plus one"
     },
     "s2": {
       "title": "When are you coming?",
