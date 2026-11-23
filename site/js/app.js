@@ -7,16 +7,35 @@ const cfg = window.SITE_CONFIG || {};
 const boot = window.__LANG || { lang: "en", manual: false };
 let manualLang = boot.manual;
 let household = null;   // set when the personal link is valid
+let greetingNames = null; // names shown in "Dear …," (from the lookup, or remembered from an earlier visit)
+let lookupDone = false;
 let cardState = "loading"; // loading | nocode | failed | rsvp
 
 const $ = (sel) => document.querySelector(sel);
 const code = (new URLSearchParams(location.search).get("g") || "").trim();
+const CACHE_KEY = "household:" + code;
+
+/** The household's names, remembered in this browser so repeat visits greet them instantly. */
+function readCache() {
+  try { return JSON.parse(localStorage.getItem(CACHE_KEY) || "null"); } catch (e) { return null; }
+}
+function writeCache(res) {
+  try { localStorage.setItem(CACHE_KEY, JSON.stringify({ lang: res.lang, names: res.guests.map((g) => g.name) })); } catch (e) {}
+}
+function dropCache() {
+  try { localStorage.removeItem(CACHE_KEY); } catch (e) {}
+}
 
 init();
 
 async function init() {
-  await setLang(boot.lang);
+  const cached = code ? readCache() : null;
+  if (cached && Array.isArray(cached.names)) greetingNames = cached.names;
+  // Open in the household's language straight away if we remember it (and the guest hasn't picked one).
+  const startLang = !manualLang && cached && (cached.lang === "en" || cached.lang === "de") ? cached.lang : boot.lang;
+  await setLang(startLang);
   applyConfig();
+  paintGreeting();
   onChange(() => { applyConfig(); paintGreeting(); paintCard(); rerender(); });
 
   document.querySelectorAll("[data-lang]").forEach((btn) => btn.addEventListener("click", () => {
@@ -59,24 +78,37 @@ async function loadHousehold() {
   paintCard();
   try {
     const res = await lookupGuest(code);
-    if (!res || !res.ok) { cardState = "nocode"; return paintCard(); }
+    lookupDone = true;
+    if (!res || !res.ok) {
+      greetingNames = null;
+      dropCache();
+      paintGreeting();
+      cardState = "nocode";
+      return paintCard();
+    }
     household = { code, ...res };
+    greetingNames = res.guests.map((g) => g.name);
+    writeCache(res);
     if (!manualLang && (res.lang === "en" || res.lang === "de") && res.lang !== lang()) await setLang(res.lang);
     paintGreeting();
     cardState = "rsvp";
     mountRsvp($("#rsvp-card"), household);
   } catch (e) {
+    lookupDone = true;
+    paintGreeting(); // keeps remembered names, otherwise falls back to "Dear friends,"
     cardState = "failed";
     paintCard();
   }
 }
 
+/** Names if we have them; blank (space kept) while a personal link is still loading; otherwise "Dear friends,". */
 function paintGreeting() {
   const el = $("#greeting");
-  if (household) {
-    el.removeAttribute("data-i18n");
-    el.textContent = t("hero.greeting", { names: joinNames(household.guests.map((g) => g.name)) });
-  }
+  const waiting = !greetingNames && code && !lookupDone;
+  el.classList.toggle("is-pending", !!waiting);
+  if (waiting) el.textContent = "\u00a0";
+  else if (greetingNames) el.textContent = t("hero.greeting", { names: joinNames(greetingNames) });
+  else el.textContent = t("hero.greetingGeneric");
 }
 
 function paintCard() {

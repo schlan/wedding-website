@@ -1,7 +1,8 @@
 // Talks to the Google Apps Script web app, or to a fake one in demo mode.
 const cfg = window.SITE_CONFIG || {};
 export const isMock = cfg.APPS_SCRIPT_URL === "mock";
-const LOOKUP_TIMEOUT_MS = 8000;
+// Apps Script can take 5–10 s to wake up after a quiet spell.
+const LOOKUP_TIMEOUT_MS = 15000;
 
 /** Returns { ok:true, household, lang, guests, response } or { ok:false, error }. Throws on network failure/timeout. */
 export async function lookupGuest(code) {
