@@ -1,4 +1,6 @@
 /**
+ * @OnlyCurrentDoc  ← limits this script to the one spreadsheet it's attached to (not all your Sheets).
+ *
  * Éadaoin & Sebastian · RSVP backend.
  * Paste this whole file into Extensions → Apps Script of the RSVP Google Sheet.
  * See README.md in this folder for the 10-minute setup.

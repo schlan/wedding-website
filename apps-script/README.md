@@ -6,11 +6,16 @@ About 10 minutes, no coding. You need a Google account. The Sheet stays private 
 
 1. Go to <https://sheets.new> and name the spreadsheet, e.g. **Wedding RSVPs**.
 2. Menu **Extensions → Apps Script**. A code editor opens in a new tab.
-3. Delete everything in `Code.gs`, paste in the whole contents of [`Code.gs`](Code.gs) from this folder, and click **Save** (disk icon).
-4. In the toolbar, pick **`setupSheet`** in the function dropdown and click **Run**.
-5. Google asks for permission the first time: **Review permissions** → choose your account → *"Google hasn't verified this app"* → **Advanced** → **Go to … (unsafe)** → **Allow**.
-   That warning appears because this is your own private script, not a published app. It only gets access to this one spreadsheet.
-6. Go back to the Sheet tab and **reload** it. You now have the tabs **Guests, Settings, Responses, Latest, Summary** and a **Wedding** menu.
+3. Click **Untitled project** at the top and rename it, e.g. **Wedding RSVP**. (That's the name Google shows on the permission screen.)
+4. Delete everything in `Code.gs`, paste in the whole contents of [`Code.gs`](Code.gs) from this folder, and click **Save** (disk icon). Make sure the first lines, including `@OnlyCurrentDoc`, came along.
+5. In the toolbar, pick **`setupSheet`** in the function dropdown and click **Run**.
+6. Google asks for permission the first time: *"Wedding RSVP wants access to your Google Account"* → choose your account → *"Google hasn't verified this app"* → **Advanced** → **Go to Wedding RSVP (unsafe)** → **Allow**.
+   That warning appears because this is your own private script, not a published app. The permissions listed should be only:
+   - *View and manage spreadsheets that this application has been installed in* (just this Sheet), and
+   - *Display and run third-party web content in prompts and sidebars inside Google applications* (the Wedding menu's pop-up messages).
+
+   If it asks to *"See, edit, create and delete all your Google Sheets spreadsheets"*, the `@OnlyCurrentDoc` line is missing. Cancel and paste the script again.
+7. Go back to the Sheet tab and **reload** it. You now have the tabs **Guests, Settings, Responses, Latest, Summary** and a **Wedding** menu.
 
 ## 2. Add guests
 
