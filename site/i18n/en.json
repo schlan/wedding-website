@@ -26,7 +26,8 @@
     "place": "Casa Bini, San Miniato",
     "placeSub": "in the hills of Tuscany",
     "cta": "Let us know you're coming",
-    "alt": "Casa Bini among the Tuscan hills at sunset"
+    "alt": "Éadaoin and Sebastian by the sea on a sunny day",
+    "altInset": "Éadaoin and Sebastian on a boat at sunset"
   },
   "weekend": {
     "title": "Our weekend",
@@ -58,7 +59,9 @@
     "intro": "Our home for the weekend: a late-18th-century manor house on an organic farm near San Miniato, with olive groves, a pool and views over the hills. Everyone stays together under one roof, little ones too.",
     "altAerial": "Aerial view of Casa Bini, its pool and the Tuscan hills at sunset",
     "altDining": "Long dining table under brick arches at Casa Bini",
-    "altBedroom": "Bedroom at Casa Bini with terracotta floor and wooden beams"
+    "altBedroom": "Bedroom at Casa Bini with terracotta floor and wooden beams",
+    "altSunset": "Casa Bini among the Tuscan hills at sunset",
+    "altLiving": "Living room at Casa Bini with a brick fireplace and big windows onto the garden"
   },
   "travel": {
     "title": "Getting here",

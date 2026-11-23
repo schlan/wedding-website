@@ -100,11 +100,17 @@ section[id], #top { scroll-margin-top: 12px; }
 /* Hero */
 .hero { display: flex; flex-direction: column; align-items: center; text-align: center; padding-top: 14px; }
 .hero__photo { width: 100%; display: flex; justify-content: center; }
-.hero__photo picture { width: 100%; }
+.hero__frame { position: relative; width: min(320px, 100%); margin-inline: auto; }
+.hero__main { display: block; }
 .arch {
-  width: min(320px, 100%); height: 380px; margin-inline: auto; object-fit: cover; object-position: 63% 55%;
+  width: 100%; height: 380px; object-fit: cover; object-position: 50% 30%;
   border-radius: 160px 160px 18px 18px; border: 6px solid #fff; box-shadow: 0 6px 24px rgba(60, 70, 40, .18);
   background: var(--sage-tint);
+}
+.hero__inset { position: absolute; left: -10px; bottom: 70px; width: 112px; height: 112px; transform: rotate(-5deg); }
+.hero__inset img {
+  width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 5px solid #fff;
+  box-shadow: 0 6px 20px rgba(60, 70, 40, .22); background: var(--sage-tint);
 }
 .hero__text { position: relative; margin-top: -40px; display: flex; flex-direction: column; align-items: center; }
 .garland { width: 300px; max-width: 100%; height: auto; }
@@ -147,7 +153,7 @@ section[id], #top { scroll-margin-top: 12px; }
 .venue__photos { margin-top: 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .venue__photos img { width: 100%; height: 140px; object-fit: cover; border-radius: 18px; background: var(--sage-tint); }
 .venue__big { grid-column: span 2; }
-.venue__big img { height: 220px; max-width: 864px; margin-inline: auto; }
+.venue__big img { height: 220px; max-width: 864px; margin-inline: auto; object-position: 63% 55%; }
 
 /* Getting here */
 .travel { padding-top: 48px; }
@@ -260,6 +266,7 @@ textarea.input { padding: 12px; resize: vertical; min-height: 96px; }
 /* Very small phones: a little more room for the RSVP chips */
 @media (max-width: 359px) {
   :root { --gutter: 14px; }
+  .hero__inset { left: 4px; width: 100px; height: 100px; }
   .rsvp-card { padding: 20px 16px 18px; }
 }
 
@@ -292,7 +299,10 @@ textarea.input { padding: 12px; resize: vertical; min-height: 96px; }
   .hero { flex-direction: row-reverse; align-items: center; justify-content: space-between; gap: 56px; text-align: left; padding-top: 30px; }
   .hero__photo { flex: 0 1 400px; }
   /* Capped at 460px tall so the 864×575 photo isn't stretched (brief §4). */
-  .arch { width: 100%; max-width: 380px; height: 460px; border-radius: 190px 190px 24px 24px; border-width: 8px; box-shadow: 0 10px 40px rgba(60, 70, 40, .18); }
+  .hero__frame { width: 100%; max-width: 380px; }
+  .hero__inset { left: -44px; bottom: 80px; width: 150px; height: 150px; }
+  .hero__inset img { border-width: 6px; }
+  .arch { width: 100%; height: 460px; border-radius: 190px 190px 24px 24px; border-width: 8px; box-shadow: 0 10px 40px rgba(60, 70, 40, .18); }
   .hero__text { flex: 1 1 420px; margin-top: 0; align-items: flex-start; }
   .garland { width: 260px; }
   .hero__greeting { font-size: 24px; }
@@ -326,10 +336,10 @@ textarea.input { padding: 12px; resize: vertical; min-height: 96px; }
   .venue__text .script-title { text-align: left; }
   .venue__text .lead { max-width: 420px; }
   /* Photos are only ~864px wide; keep them in modest frames. */
-  .venue__photos { flex: 2 1 520px; max-width: 720px; margin-top: 0; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 14px; }
+  .venue__photos { flex: 2 1 560px; max-width: 760px; margin-top: 0; grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr)); gap: 14px; }
   .venue__big { grid-column: auto; grid-row: span 2; }
   .venue__photos img { height: 183px; border-radius: 22px; }
-  .venue__photos .venue__big img { height: 380px; object-position: 40% 50%; }
+  .venue__photos .venue__big img { height: 380px; object-position: 63% 55%; }
 
   .travel { padding-top: 100px; }
   .travel__grid { margin-top: 32px; flex-direction: row; align-items: center; gap: 40px; }

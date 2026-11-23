@@ -13,8 +13,8 @@
 <link rel="preload" href="fonts/eb-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/pinyon-script-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" type="image/webp"
-      imagesrcset="img/hero-casa-bini-sunset-600.webp 600w, img/hero-casa-bini-sunset-864.webp 864w"
-      imagesizes="(min-width: 900px) 700px, 580px" fetchpriority="high">
+      imagesrcset="img/hero-couple-garden-600.webp 600w, img/hero-couple-garden-900.webp 900w"
+      imagesizes="(min-width: 900px) 380px, 320px" fetchpriority="high">
 <link rel="stylesheet" href="css/site.css">
 <script src="config.js"></script>
 <script src="js/boot.js"></script>
@@ -49,13 +49,20 @@
   <main>
     <section class="hero wrap" id="hero" aria-labelledby="hero-names">
       <div class="hero__photo">
-        <picture>
-          <source type="image/webp" srcset="img/hero-casa-bini-sunset-600.webp 600w, img/hero-casa-bini-sunset-864.webp 864w" sizes="(min-width: 900px) 700px, 580px">
-          <img class="arch" src="img/hero-casa-bini-sunset-864.jpg"
-               srcset="img/hero-casa-bini-sunset-600.jpg 600w, img/hero-casa-bini-sunset-864.jpg 864w"
-               sizes="(min-width: 900px) 700px, 580px" width="864" height="575"
-               fetchpriority="high" decoding="async" alt="" data-i18n-attr="alt:hero.alt">
-        </picture>
+        <div class="hero__frame">
+          <picture class="hero__main">
+            <source type="image/webp" srcset="img/hero-couple-garden-600.webp 600w, img/hero-couple-garden-900.webp 900w" sizes="(min-width: 900px) 380px, 320px">
+            <img class="arch" src="img/hero-couple-garden-900.jpg"
+                 srcset="img/hero-couple-garden-600.jpg 600w, img/hero-couple-garden-900.jpg 900w"
+                 sizes="(min-width: 900px) 380px, 320px" width="900" height="1100"
+                 fetchpriority="high" decoding="async" alt="" data-i18n-attr="alt:hero.alt">
+          </picture>
+          <picture class="hero__inset">
+            <source type="image/webp" srcset="img/hero-couple-boat-320.webp 320w, img/hero-couple-boat-480.webp 480w" sizes="(min-width: 900px) 150px, 112px">
+            <img src="img/hero-couple-boat-320.jpg" srcset="img/hero-couple-boat-320.jpg 320w, img/hero-couple-boat-480.jpg 480w"
+                 sizes="(min-width: 900px) 150px, 112px" width="480" height="480" decoding="async" alt="" data-i18n-attr="alt:hero.altInset">
+          </picture>
+        </div>
       </div>
       <div class="hero__text">
         <svg class="garland" viewBox="0 0 300 96" aria-hidden="true">
@@ -155,19 +162,29 @@
       </div>
       <div class="venue__photos">
         <picture class="venue__big">
-          <source type="image/webp" srcset="img/venue-aerial-pool-600.webp 600w, img/venue-aerial-pool-864.webp 864w" sizes="(min-width: 900px) 420px, 100vw">
-          <img src="img/venue-aerial-pool-864.jpg" srcset="img/venue-aerial-pool-600.jpg 600w, img/venue-aerial-pool-864.jpg 864w" sizes="(min-width: 900px) 420px, 100vw"
+          <source type="image/webp" srcset="img/hero-casa-bini-sunset-600.webp 600w, img/hero-casa-bini-sunset-864.webp 864w" sizes="(min-width: 900px) 600px, 100vw">
+          <img src="img/hero-casa-bini-sunset-864.jpg" srcset="img/hero-casa-bini-sunset-600.jpg 600w, img/hero-casa-bini-sunset-864.jpg 864w" sizes="(min-width: 900px) 600px, 100vw"
+               width="864" height="575" loading="lazy" decoding="async" alt="" data-i18n-attr="alt:venue.altSunset">
+        </picture>
+        <picture>
+          <source type="image/webp" srcset="img/venue-aerial-pool-600.webp 600w, img/venue-aerial-pool-864.webp 864w" sizes="(min-width: 900px) 240px, 50vw">
+          <img src="img/venue-aerial-pool-600.jpg" srcset="img/venue-aerial-pool-600.jpg 600w, img/venue-aerial-pool-864.jpg 864w" sizes="(min-width: 900px) 240px, 50vw"
                width="864" height="575" loading="lazy" decoding="async" alt="" data-i18n-attr="alt:venue.altAerial">
         </picture>
         <picture>
-          <source type="image/webp" srcset="img/venue-dining-table-480.webp 480w, img/venue-dining-table-864.webp 864w" sizes="(min-width: 900px) 300px, 50vw">
-          <img src="img/venue-dining-table-480.jpg" srcset="img/venue-dining-table-480.jpg 480w, img/venue-dining-table-864.jpg 864w" sizes="(min-width: 900px) 300px, 50vw"
+          <source type="image/webp" srcset="img/venue-dining-table-480.webp 480w, img/venue-dining-table-864.webp 864w" sizes="(min-width: 900px) 240px, 50vw">
+          <img src="img/venue-dining-table-480.jpg" srcset="img/venue-dining-table-480.jpg 480w, img/venue-dining-table-864.jpg 864w" sizes="(min-width: 900px) 240px, 50vw"
                width="864" height="575" loading="lazy" decoding="async" alt="" data-i18n-attr="alt:venue.altDining">
         </picture>
         <picture>
-          <source type="image/webp" srcset="img/venue-bedroom-480.webp 480w, img/venue-bedroom-864.webp 864w" sizes="(min-width: 900px) 300px, 50vw">
-          <img src="img/venue-bedroom-480.jpg" srcset="img/venue-bedroom-480.jpg 480w, img/venue-bedroom-864.jpg 864w" sizes="(min-width: 900px) 300px, 50vw"
+          <source type="image/webp" srcset="img/venue-bedroom-480.webp 480w, img/venue-bedroom-864.webp 864w" sizes="(min-width: 900px) 240px, 50vw">
+          <img src="img/venue-bedroom-480.jpg" srcset="img/venue-bedroom-480.jpg 480w, img/venue-bedroom-864.jpg 864w" sizes="(min-width: 900px) 240px, 50vw"
                width="864" height="575" loading="lazy" decoding="async" alt="" data-i18n-attr="alt:venue.altBedroom">
+        </picture>
+        <picture>
+          <source type="image/webp" srcset="img/spare-living-room-480.webp 480w, img/spare-living-room-864.webp 864w" sizes="(min-width: 900px) 240px, 50vw">
+          <img src="img/spare-living-room-480.jpg" srcset="img/spare-living-room-480.jpg 480w, img/spare-living-room-864.jpg 864w" sizes="(min-width: 900px) 240px, 50vw"
+               width="864" height="575" loading="lazy" decoding="async" alt="" data-i18n-attr="alt:venue.altLiving">
         </picture>
       </div>
     </section>

@@ -27,7 +27,8 @@
     "place": "Casa Bini, San Miniato",
     "placeSub": "in den Hügeln der Toskana",
     "cta": "Sagt uns, dass ihr kommt",
-    "alt": "Die Casa Bini in den toskanischen Hügeln bei Sonnenuntergang"
+    "alt": "Éadaoin und Sebastian am Meer an einem sonnigen Tag",
+    "altInset": "Éadaoin und Sebastian bei Sonnenuntergang auf einem Boot"
   },
   "weekend": {
     "title": "Unser Wochenende",
@@ -59,7 +60,9 @@
     "intro": "Unser Zuhause für das Wochenende: ein Herrenhaus aus dem späten 18. Jahrhundert auf einem Bio-Bauernhof bei San Miniato, mit Olivenhainen, Pool und Blick über die Hügel. Wir wohnen alle zusammen unter einem Dach, die Kleinen natürlich auch.",
     "altAerial": "Luftaufnahme der Casa Bini mit Pool und toskanischen Hügeln bei Sonnenuntergang",
     "altDining": "Lange Tafel unter Backsteinbögen in der Casa Bini",
-    "altBedroom": "Schlafzimmer in der Casa Bini mit Terrakottaboden und Holzbalken"
+    "altBedroom": "Schlafzimmer in der Casa Bini mit Terrakottaboden und Holzbalken",
+    "altSunset": "Die Casa Bini in den toskanischen Hügeln bei Sonnenuntergang",
+    "altLiving": "Wohnzimmer der Casa Bini mit Backsteinkamin und großen Fenstern zum Garten"
   },
   "travel": {
     "title": "Anreise",
