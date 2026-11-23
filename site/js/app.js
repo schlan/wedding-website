@@ -10,6 +10,9 @@ let household = null;   // set when the personal link is valid
 let greetingNames = null; // names shown in "Dear …," (from the lookup, or remembered from an earlier visit)
 let lookupDone = false;
 let cardState = "loading"; // loading | nocode | failed | rsvp
+// The splash screen waits at most this long for the guest lookup; after that the page shows and fills in later.
+const SPLASH_MAX_MS = 4000;
+const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const $ = (sel) => document.querySelector(sel);
 const code = (new URLSearchParams(location.search).get("g") || "").trim();
@@ -33,9 +36,12 @@ async function init() {
   if (cached && Array.isArray(cached.names)) greetingNames = cached.names;
   // Open in the household's language straight away if we remember it (and the guest hasn't picked one).
   const startLang = !manualLang && cached && (cached.lang === "en" || cached.lang === "de") ? cached.lang : boot.lang;
-  await setLang(startLang);
+  const lookup = code ? startLookup() : null; // picks up the request boot.js already started
+  const langReady = setLang(startLang);
+  // Behind the splash: wait for the guest's names (and language), unless we remember them or it takes too long.
+  const early = lookup && !greetingNames ? await Promise.race([lookup, wait(SPLASH_MAX_MS).then(() => null)]) : null;
+  await langReady;
   applyConfig();
-  paintGreeting();
   onChange(() => { applyConfig(); paintGreeting(); paintCard(); rerender(); });
 
   document.querySelectorAll("[data-lang]").forEach((btn) => btn.addEventListener("click", () => {
@@ -45,7 +51,30 @@ async function init() {
 
   $("#demo-badge").hidden = !isMock;
   setupSticky();
-  loadHousehold();
+
+  if (!code) cardState = "nocode";
+  if (early) await applyLookup(early);
+  else { paintGreeting(); paintCard(); }
+  reveal();
+  if (lookup && !early) await applyLookup(await lookup);
+}
+
+/** Fades out the splash screen. */
+function reveal() {
+  document.documentElement.classList.add("is-ready");
+  document.documentElement.classList.remove("i18n-pending");
+  setTimeout(() => { const s = $("#splash"); if (s) s.hidden = true; }, 600);
+}
+
+/** Resolves to { res } or { err }, never rejects. */
+function startLookup() {
+  return lookupGuest(code).then((res) => ({ res }), (err) => ({ err }));
+}
+
+async function retryLookup() {
+  cardState = "loading";
+  paintCard();
+  await applyLookup(await startLookup());
 }
 
 function applyConfig() {
@@ -72,33 +101,27 @@ function splitAround(text, token, node) {
   return [text.slice(0, i), node, text.slice(i + token.length)];
 }
 
-async function loadHousehold() {
-  if (!code) { cardState = "nocode"; return paintCard(); }
-  cardState = "loading";
-  paintCard();
-  try {
-    const res = await lookupGuest(code);
-    lookupDone = true;
-    if (!res || !res.ok) {
-      greetingNames = null;
-      dropCache();
-      paintGreeting();
-      cardState = "nocode";
-      return paintCard();
-    }
-    household = { code, ...res };
-    greetingNames = res.guests.map((g) => g.name);
-    writeCache(res);
-    if (!manualLang && (res.lang === "en" || res.lang === "de") && res.lang !== lang()) await setLang(res.lang);
-    paintGreeting();
-    cardState = "rsvp";
-    mountRsvp($("#rsvp-card"), household);
-  } catch (e) {
-    lookupDone = true;
+async function applyLookup({ res, err }) {
+  lookupDone = true;
+  if (err) {
     paintGreeting(); // keeps remembered names, otherwise falls back to "Dear friends,"
     cardState = "failed";
-    paintCard();
+    return paintCard();
   }
+  if (!res || !res.ok) {
+    greetingNames = null;
+    dropCache();
+    paintGreeting();
+    cardState = "nocode";
+    return paintCard();
+  }
+  household = { code, ...res };
+  greetingNames = res.guests.map((g) => g.name);
+  writeCache(res);
+  if (!manualLang && (res.lang === "en" || res.lang === "de") && res.lang !== lang()) await setLang(res.lang);
+  paintGreeting();
+  cardState = "rsvp";
+  mountRsvp($("#rsvp-card"), household);
 }
 
 /** Names if we have them; blank (space kept) while a personal link is still loading; otherwise "Dear friends,". */
@@ -121,7 +144,7 @@ function paintCard() {
     wrap.append(p(t("rsvp.loading")));
   } else if (cardState === "failed") {
     const btn = Object.assign(document.createElement("button"), { type: "button", className: "btn", textContent: t("rsvp.tryAgain") });
-    btn.addEventListener("click", loadHousehold);
+    btn.addEventListener("click", retryLookup);
     wrap.append(p(t("rsvp.lookupFailed")), btn);
   } else {
     const contact = document.createElement("p");

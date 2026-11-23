@@ -16,11 +16,16 @@
       imagesrcset="img/hero-casa-bini-sunset-600.webp 600w, img/hero-casa-bini-sunset-864.webp 864w"
       imagesizes="(min-width: 900px) 700px, 580px" fetchpriority="high">
 <link rel="stylesheet" href="css/site.css">
-<script src="js/boot.js"></script>
 <script src="config.js"></script>
+<script src="js/boot.js"></script>
+<noscript><style>.splash { display: none; }</style></noscript>
 <script type="module" src="js/app.js"></script>
 </head>
 <body>
+<div class="splash" id="splash" aria-hidden="true">
+  <p class="splash__mark">E &amp; S</p>
+  <span class="splash__spinner"></span>
+</div>
 <div class="page" id="top">
   <div class="blob blob--lemon" aria-hidden="true"></div>
   <div class="blob blob--sage" aria-hidden="true"></div>

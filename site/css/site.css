@@ -42,6 +42,24 @@ a:hover { color: var(--sage-dark); }
 .i18n-pending [data-i18n] { visibility: hidden; }
 
 /* overflow: hidden first for Safari < 16, which doesn't know "clip" (the decorative circles would cause sideways scrolling). */
+/* Splash screen: covers the page until text and the guest's names are ready (max ~4 s). */
+.splash {
+  position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px;
+  background: var(--bg); transition: opacity .45s ease, visibility .45s;
+}
+.is-ready .splash { opacity: 0; visibility: hidden; pointer-events: none; }
+.splash__mark { font-family: var(--script); font-size: 52px; line-height: 1; color: var(--heading); opacity: 0; animation: splash-in .4s ease .15s forwards; }
+.splash__spinner {
+  position: relative; width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--sage-tint); border-top-color: var(--leaf);
+  opacity: 0; animation: splash-in .3s ease .5s forwards, splash-spin 1.1s linear infinite;
+}
+.splash__spinner::after { content: ""; position: absolute; top: -5px; left: 50%; width: 10px; height: 8px; margin-left: -5px; border-radius: 50%; background: #E9C440; }
+@keyframes splash-spin { to { transform: rotate(360deg); } }
+@keyframes splash-in { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .splash__spinner { animation: splash-in .3s ease .5s forwards; }
+}
+
 .page { position: relative; overflow: hidden; overflow: clip; min-height: 100vh; }
 .wrap { position: relative; max-width: 1180px; margin: 0 auto; padding-inline: var(--gutter); }
 section[id], #top { scroll-margin-top: 12px; }

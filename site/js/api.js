@@ -7,6 +7,11 @@ const LOOKUP_TIMEOUT_MS = 15000;
 /** Returns { ok:true, household, lang, guests, response } or { ok:false, error }. Throws on network failure/timeout. */
 export async function lookupGuest(code) {
   if (isMock) return withTimeout(mockLookup(code), LOOKUP_TIMEOUT_MS);
+  const early = window.__earlyLookup;
+  if (early && early.code === code) {
+    window.__earlyLookup = null; // only once; "Try again" makes a fresh request
+    return withTimeout(early.promise, LOOKUP_TIMEOUT_MS);
+  }
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), LOOKUP_TIMEOUT_MS);
   try {
