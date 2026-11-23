@@ -4,12 +4,6 @@ import { submitRsvp } from "./api.js";
 
 const DAYS = { thu: "2027-06-03", fri: "2027-06-04", sat: "2027-06-05", sun: "2027-06-06", mon: "2027-06-07" };
 const DIETS = ["any", "vegetarian", "vegan", "gluten_free", "other"];
-const FRIDGE = [
-  ["breakfast", ["coffee", "tea", "cereal", "yoghurt", "eggs", "pastries", "fruit"]],
-  ["milk", ["cows_milk", "oat_milk", "soy_milk", "lactose_free"]],
-  ["drinks", ["beer", "wine", "prosecco", "soft_drinks", "sparkling_water", "juice"]],
-  ["snacks", ["crisps", "chocolate", "nuts", "kids_snacks"]],
-];
 const MAX_ADDED = 6;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -37,7 +31,7 @@ function initialState(guests, r) {
     arrival_day: null, arrival_time: null, departure_day: null,
     travel_mode: null, airport: null, station: null, pickup: null, travel_details: "",
     pizza: null, pizzaAuto: false, wine: null,
-    allergies: "", fridge: new Set(), fridge_other: "",
+    allergies: "", fridge_wishes: "",
     email: "", note: "", website: "",
   };
   if (!r) return st;
@@ -51,8 +45,7 @@ function initialState(guests, r) {
   for (const k of ["arrival_day", "arrival_time", "departure_day", "travel_mode", "airport", "station", "pickup", "pizza", "wine"]) {
     if (r[k] !== undefined) st[k] = r[k];
   }
-  for (const k of ["travel_details", "allergies", "fridge_other", "email", "note"]) st[k] = r[k] || "";
-  st.fridge = new Set(r.fridge || []);
+  for (const k of ["travel_details", "allergies", "fridge_wishes", "email", "note"]) st[k] = r[k] || "";
   return st;
 }
 
@@ -78,11 +71,10 @@ function payload() {
     travel_details: moving ? s.travel_details.trim() : "",
     pizza: s.pizza, wine: s.wine,
     allergies: s.allergies.trim(),
-    fridge: FRIDGE.flatMap(([, items]) => items).filter((i) => s.fridge.has(i)),
-    fridge_other: s.fridge_other.trim(),
+    fridge_wishes: s.fridge_wishes.trim(),
   } : {
     arrival_day: null, arrival_time: null, departure_day: null, travel_mode: null, airport: null, station: null,
-    pickup: null, travel_details: null, pizza: null, wine: null, allergies: null, fridge: [], fridge_other: null,
+    pickup: null, travel_details: null, pizza: null, wine: null, allergies: null, fridge_wishes: null,
   };
   return { code, lang: lang(), website: s.website, guests, ...trip, email: s.email.trim(), note: s.note.trim() };
 }
@@ -330,16 +322,7 @@ function step6() {
   return [
     stepHeading(t("rsvp.s6.title")),
     h("p", { class: "step__intro" }, t("rsvp.s6.intro")),
-    ...FRIDGE.map(([group, items]) => {
-      const labelId = id("lbl");
-      return h("div", { class: "field", role: "group", "aria-labelledby": labelId },
-        h("span", { class: "group-title", id: labelId }, t(`rsvp.s6.${group}`)),
-        h("div", { class: "chips chips--small" }, items.map((it) => h("button", {
-          type: "button", class: "chip", "aria-pressed": String(s.fridge.has(it)), "data-key": `fridge:${it}`,
-          on: { click: () => { s.fridge.has(it) ? s.fridge.delete(it) : s.fridge.add(it); ui.focus = { key: `fridge:${it}` }; render(); } },
-        }, t(`rsvp.s6.items.${it}`)))));
-    }),
-    textInput("fridge_other", t("rsvp.s6.other"), s.fridge_other, (v) => { s.fridge_other = v; }, { placeholder: t("rsvp.s6.otherPlaceholder"), autocomplete: "off" }),
+    textInput("fridge_wishes", t("rsvp.s6.wishes"), s.fridge_wishes, (v) => { s.fridge_wishes = v; }, { placeholder: t("rsvp.s6.placeholder"), multiline: true }),
   ];
 }
 
