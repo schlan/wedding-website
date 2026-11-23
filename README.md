@@ -68,4 +68,4 @@ Until step 2, the live site runs in demo mode (with a "Demo mode" badge).
 9. Can guests leave on Saturday?
 10. Privacy line wording, and when to delete the Sheet.
 11. Re-check travel facts before launch.
-12. Apps Script backend: set it up (`apps-script/README.md`), then put its URL in `APPS_SCRIPT_URL` (replacing `"mock"`).
+12. ~~Apps Script backend~~: done, connected in `config.js`.

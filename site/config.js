@@ -1,9 +1,9 @@
 // Site settings. Edit these, then redeploy. No other file needs to change.
 window.SITE_CONFIG = {
-  // TODO: paste the Apps Script web app URL here (see apps-script/README.md).
-  // "mock" = demo mode: a fake guest list, answers saved only in this browser.
+  // The Apps Script web app URL (see apps-script/README.md).
+  // Set to "mock" for demo mode: a fake guest list, answers saved only in this browser.
   //   Try ?g=test, ?g=de, ?g=solo, ?g=fail (lookup error), ?g=slow (timeout), ?g=sendfail (submit error).
-  APPS_SCRIPT_URL: "mock",
+  APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwzdBktn49wRSmUOU1U_yL006SiYGH7G52tGkp_T0u2bnXUKelSHs-caoflb0wudUQJ/exec",
 
   // TODO (open item 5): the couple's contact email. Needed before launch.
   CONTACT_EMAIL: "",
