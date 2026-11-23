@@ -1,0 +1,235 @@
+{
+  "meta": {
+    "title": "Éadaoin & Sebastian · Tuscany 2027",
+    "description": "Join us at Casa Bini in Tuscany, 3–7 June 2027."
+  },
+  "nav": {
+    "weekend": "Our weekend",
+    "venue": "Casa Bini",
+    "travel": "Getting here",
+    "rsvp": "RSVP",
+    "language": "Language",
+    "monogramLabel": "Éadaoin & Sebastian, back to the top"
+  },
+  "demo": "Demo mode: answers stay in this browser",
+  "hero": {
+    "greetingGeneric": "Dear friends,",
+    "greeting": "Dear {names},",
+    "invite": "come and celebrate with us under the Tuscan sun",
+    "and": "and",
+    "daysTop": "Thursday",
+    "daysBottom": "to Monday",
+    "range": "3–7",
+    "monthTop": "June",
+    "monthBottom": "2027",
+    "dateFull": "3–7 June 2027",
+    "place": "Casa Bini, San Miniato",
+    "placeSub": "in the hills of Tuscany",
+    "cta": "Let us know you're coming",
+    "alt": "Casa Bini among the Tuscan hills at sunset"
+  },
+  "weekend": {
+    "title": "Our weekend",
+    "thu": {
+      "title": "Arrivals & pizza night",
+      "text": "Arrive, settle in, then pizza night together at the villa."
+    },
+    "fri": {
+      "title": "The ceremony",
+      "text": "We say our vows at Casa Bini, then dinner and celebrations.",
+      "timeTbc": "Time to follow.",
+      "time": "Ceremony at {time}."
+    },
+    "sat": {
+      "title": "Wine tasting",
+      "text": "An optional visit to a local winery. Come along if you like."
+    },
+    "sun": {
+      "title": "BBQ & pool day",
+      "text": "A lazy BBQ and plenty of time by the pool."
+    },
+    "mon": {
+      "title": "Time to head home",
+      "text": "Breakfast, goodbyes and safe travels."
+    }
+  },
+  "venue": {
+    "title": "Casa Bini",
+    "intro": "Our home for the weekend: a late-18th-century manor house on an organic farm near San Miniato, with olive groves, a pool and views over the hills. Everyone stays together under one roof, little ones too.",
+    "altAerial": "Aerial view of Casa Bini, its pool and the Tuscan hills at sunset",
+    "altDining": "Long dining table under brick arches at Casa Bini",
+    "altBedroom": "Bedroom at Casa Bini with terracotta floor and wooden beams"
+  },
+  "travel": {
+    "title": "Getting here",
+    "intro": "Casa Bini sits in the hills between Pisa and Florence. Tell us how you're arriving in your RSVP and we'll come and get you.",
+    "mapLabel": "Illustrated map: Casa Bini sits south-east of San Miniato, between Pisa airport to the west and Florence airport to the east, near San Miniato-Fucecchio and Granaiolo train stations.",
+    "psa": {
+      "title": "Pisa airport (PSA)",
+      "text": "We can pick you up. Car hire is also available at the airport."
+    },
+    "flr": {
+      "title": "Florence airport (FLR)",
+      "text": "About 40–45 minutes by car. We can pick you up here too."
+    },
+    "smf": {
+      "title": "San Miniato-Fucecchio station",
+      "text": "Direct trains from Pisa and Florence, about 30–40 minutes. We'll collect you from the station."
+    },
+    "granaiolo": {
+      "title": "Granaiolo station",
+      "text": "The closest station to the villa, about 13 minutes by car. Change at Empoli."
+    },
+    "carHire": "Fancy exploring? A hire car is a great idea: Florence, Pisa, Lucca, Volterra and San Gimignano are all within easy reach.",
+    "maps": "Open in Google Maps",
+    "mapFlorence": "Florence"
+  },
+  "rsvp": {
+    "title": "RSVP",
+    "subtitle": "Seven quick steps, about two minutes",
+    "label": "RSVP",
+    "stepOf": "Step {n} of 7",
+    "back": "Back",
+    "next": "Next",
+    "send": "Send our RSVP",
+    "sending": "Sending…",
+    "missing": "Just one more answer here, please.",
+    "chooseOne": "Please choose one",
+    "loading": "Opening your invitation…",
+    "noCode": "Your RSVP lives on the personal link we sent you.",
+    "noCodeContact": "Can't find it? Get in touch at {contact}.",
+    "noCodeContactMissing": "Can't find it? Just get in touch with us.",
+    "lookupFailed": "We couldn't load your invitation just now.",
+    "tryAgain": "Try again",
+    "sendFailed": "That didn't go through. Please try again in a moment.",
+    "yes": "Yes, coming",
+    "no": "Sadly not",
+    "s1": {
+      "title": "Who's coming?",
+      "intro": "We've saved a place for each of you. Let us know who can make it.",
+      "add": "+ Add a little one we missed",
+      "addedName": "Name",
+      "addedChild": "Child",
+      "remove": "Remove {name}",
+      "removeUnnamed": "Remove this person",
+      "littleOne": "Little one",
+      "nameMissing": "Please add a name"
+    },
+    "s2": {
+      "title": "When are you coming?",
+      "arrive": "We'll arrive on",
+      "time": "Around",
+      "leave": "We'll head home on",
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening"
+    },
+    "s3": {
+      "title": "Getting to us",
+      "mode": "How are you travelling?",
+      "fly": "Flying",
+      "train": "Train",
+      "drive": "Driving",
+      "airport": "Landing at",
+      "psa": "Pisa",
+      "flr": "Florence",
+      "station": "Arriving at the station",
+      "smf": "San Miniato-Fucecchio",
+      "granaiolo": "Granaiolo",
+      "pickup": "Shall we pick you up?",
+      "pickupYes": "Yes please",
+      "pickupNo": "No, we're sorted",
+      "details": "Flight or train and arrival time",
+      "detailsPlaceholder": "e.g. EI 412, lands 14:35"
+    },
+    "s4": {
+      "title": "Join the fun",
+      "intro": "Friday's ceremony and Sunday's BBQ are a given. These two help us plan.",
+      "pizza": "Thursday pizza night",
+      "pizzaYes": "Count us in",
+      "pizzaLater": "We arrive later",
+      "wine": "Saturday wine tasting",
+      "wineText": "A visit to a local winery. Details to follow.",
+      "wineYes": "Yes please",
+      "wineMaybe": "Maybe",
+      "wineNo": "Not for us"
+    },
+    "s5": {
+      "title": "Food & allergies",
+      "dietFor": "Food for {name}",
+      "any": "Anything goes",
+      "vegetarian": "Vegetarian",
+      "vegan": "Vegan",
+      "gluten_free": "Gluten-free",
+      "other": "Other",
+      "otherLabel": "Tell us more",
+      "allergies": "Any allergies we should know about?",
+      "allergiesPlaceholder": "e.g. Ciarán: nuts"
+    },
+    "s6": {
+      "title": "Stocking the fridge",
+      "intro": "We'll fill the fridges before you arrive. Tap anything you'd like to find waiting.",
+      "breakfast": "Breakfast",
+      "milk": "Milk",
+      "drinks": "Drinks",
+      "snacks": "Snacks",
+      "items": {
+        "coffee": "Coffee",
+        "tea": "Tea",
+        "cereal": "Cereal",
+        "yoghurt": "Yoghurt",
+        "eggs": "Eggs",
+        "pastries": "Pastries",
+        "fruit": "Fruit",
+        "cows_milk": "Cow's milk",
+        "oat_milk": "Oat milk",
+        "soy_milk": "Soy milk",
+        "lactose_free": "Lactose-free",
+        "beer": "Beer",
+        "wine": "Wine",
+        "prosecco": "Prosecco",
+        "soft_drinks": "Soft drinks",
+        "sparkling_water": "Sparkling water",
+        "juice": "Juice",
+        "crisps": "Crisps",
+        "chocolate": "Chocolate",
+        "nuts": "Nuts",
+        "kids_snacks": "Kids' snacks"
+      },
+      "other": "Anything else you can't live without?",
+      "otherPlaceholder": "e.g. Barry's tea, Haribo for the kids"
+    },
+    "s7": {
+      "title": "Almost done",
+      "coming": "Coming:",
+      "notComing": "Not coming:",
+      "dates": "Dates:",
+      "datesValue": "{arrive} ({time}) to {leave}",
+      "travel": "Travel:",
+      "travelDrive": "Driving ourselves",
+      "travelFly": "Flying into {place}",
+      "travelTrain": "Train to {place}",
+      "travelPickup": ", pick-up please",
+      "wine": "Wine tasting:",
+      "missYou": "We'll miss you! Thank you for letting us know.",
+      "email": "Email for updates (optional)",
+      "emailPlaceholder": "you@example.com",
+      "emailInvalid": "That email doesn't look quite right.",
+      "privacy": "We'll only use your answers to plan the weekend.",
+      "note": "A note for us (optional)"
+    },
+    "thanks": {
+      "title": "Grazie!",
+      "text": "Your RSVP is with us. We can't wait to see you in Tuscany.",
+      "textNotComing": "Thank you for letting us know. We'll raise a glass to you in Tuscany.",
+      "already": "You've already replied. Want to change something?",
+      "change": "Change your answers"
+    }
+  },
+  "sticky": "RSVP",
+  "footer": {
+    "line": "Can't wait to see you",
+    "names": "Éadaoin & Sebastian",
+    "contact": "Questions? {contact}"
+  }
+}

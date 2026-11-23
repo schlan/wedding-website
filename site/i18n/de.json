@@ -1,0 +1,236 @@
+{
+  "_review": "TODO: German draft, needs review by a native speaker (open item 6).",
+  "meta": {
+    "title": "Éadaoin & Sebastian · Toskana 2027",
+    "description": "Feiert mit uns in der Casa Bini in der Toskana, 3.–7. Juni 2027."
+  },
+  "nav": {
+    "weekend": "Unser Wochenende",
+    "venue": "Casa Bini",
+    "travel": "Anreise",
+    "rsvp": "Zusagen",
+    "language": "Sprache",
+    "monogramLabel": "Éadaoin & Sebastian, zurück nach oben"
+  },
+  "demo": "Demo-Modus: Antworten bleiben in diesem Browser",
+  "hero": {
+    "greetingGeneric": "Liebe Freunde,",
+    "greeting": "Liebe {names},",
+    "invite": "feiert mit uns unter der toskanischen Sonne",
+    "and": "und",
+    "daysTop": "Donnerstag",
+    "daysBottom": "bis Montag",
+    "range": "3.–7.",
+    "monthTop": "Juni",
+    "monthBottom": "2027",
+    "dateFull": "3.–7. Juni 2027",
+    "place": "Casa Bini, San Miniato",
+    "placeSub": "in den Hügeln der Toskana",
+    "cta": "Sagt uns, dass ihr kommt",
+    "alt": "Die Casa Bini in den toskanischen Hügeln bei Sonnenuntergang"
+  },
+  "weekend": {
+    "title": "Unser Wochenende",
+    "thu": {
+      "title": "Ankunft & Pizzaabend",
+      "text": "Ankommen, einrichten und abends gemeinsam Pizza in der Villa."
+    },
+    "fri": {
+      "title": "Die Trauung",
+      "text": "Wir geben uns in der Casa Bini das Jawort, danach wird gegessen und gefeiert.",
+      "timeTbc": "Uhrzeit folgt.",
+      "time": "Trauung um {time} Uhr."
+    },
+    "sat": {
+      "title": "Weinprobe",
+      "text": "Ein Ausflug zu einem Weingut in der Nähe. Kommt gern mit, wenn ihr Lust habt."
+    },
+    "sun": {
+      "title": "Grillen & Pooltag",
+      "text": "Gemütlich grillen und viel Zeit am Pool."
+    },
+    "mon": {
+      "title": "Heimreise",
+      "text": "Frühstück, Abschied und eine gute Reise."
+    }
+  },
+  "venue": {
+    "title": "Casa Bini",
+    "intro": "Unser Zuhause für das Wochenende: ein Herrenhaus aus dem späten 18. Jahrhundert auf einem Bio-Bauernhof bei San Miniato, mit Olivenhainen, Pool und Blick über die Hügel. Wir wohnen alle zusammen unter einem Dach, die Kleinen natürlich auch.",
+    "altAerial": "Luftaufnahme der Casa Bini mit Pool und toskanischen Hügeln bei Sonnenuntergang",
+    "altDining": "Lange Tafel unter Backsteinbögen in der Casa Bini",
+    "altBedroom": "Schlafzimmer in der Casa Bini mit Terrakottaboden und Holzbalken"
+  },
+  "travel": {
+    "title": "Anreise",
+    "intro": "Die Casa Bini liegt in den Hügeln zwischen Pisa und Florenz. Sagt uns in eurer Antwort, wie ihr anreist, dann holen wir euch ab.",
+    "mapLabel": "Illustrierte Karte: Die Casa Bini liegt südöstlich von San Miniato, zwischen dem Flughafen Pisa im Westen und dem Flughafen Florenz im Osten, in der Nähe der Bahnhöfe San Miniato-Fucecchio und Granaiolo.",
+    "psa": {
+      "title": "Flughafen Pisa (PSA)",
+      "text": "Wir können euch abholen. Am Flughafen gibt es auch Mietwagen."
+    },
+    "flr": {
+      "title": "Flughafen Florenz (FLR)",
+      "text": "Etwa 40–45 Minuten mit dem Auto. Auch hier holen wir euch gern ab."
+    },
+    "smf": {
+      "title": "Bahnhof San Miniato-Fucecchio",
+      "text": "Direkte Züge ab Pisa und Florenz, etwa 30–40 Minuten. Wir holen euch am Bahnhof ab."
+    },
+    "granaiolo": {
+      "title": "Bahnhof Granaiolo",
+      "text": "Der nächste Bahnhof zur Villa, etwa 13 Minuten mit dem Auto. Umsteigen in Empoli."
+    },
+    "carHire": "Lust auf Ausflüge? Ein Mietwagen lohnt sich: Florenz, Pisa, Lucca, Volterra und San Gimignano sind gut erreichbar.",
+    "maps": "In Google Maps öffnen",
+    "mapFlorence": "Florenz"
+  },
+  "rsvp": {
+    "title": "RSVP",
+    "subtitle": "Sieben kurze Schritte, etwa zwei Minuten",
+    "label": "RSVP",
+    "stepOf": "Schritt {n} von 7",
+    "back": "Zurück",
+    "next": "Weiter",
+    "send": "Antwort abschicken",
+    "sending": "Wird gesendet…",
+    "missing": "Hier fehlt noch eine Antwort.",
+    "chooseOne": "Bitte wählt eine Option",
+    "loading": "Eure Einladung wird geöffnet…",
+    "noCode": "Eure Antwort gebt ihr über den persönlichen Link, den wir euch geschickt haben.",
+    "noCodeContact": "Ihr findet ihn nicht? Schreibt uns an {contact}.",
+    "noCodeContactMissing": "Ihr findet ihn nicht? Meldet euch einfach bei uns.",
+    "lookupFailed": "Eure Einladung konnte gerade nicht geladen werden.",
+    "tryAgain": "Nochmal versuchen",
+    "sendFailed": "Das hat leider nicht geklappt. Bitte versucht es gleich noch einmal.",
+    "yes": "Ja, dabei",
+    "no": "Leider nicht",
+    "s1": {
+      "title": "Wer kommt?",
+      "intro": "Für jeden von euch ist ein Platz reserviert. Sagt uns, wer dabei ist.",
+      "add": "+ Ein Kind hinzufügen, das wir vergessen haben",
+      "addedName": "Name",
+      "addedChild": "Kind",
+      "remove": "{name} entfernen",
+      "removeUnnamed": "Diese Person entfernen",
+      "littleOne": "Kind",
+      "nameMissing": "Bitte gebt einen Namen ein"
+    },
+    "s2": {
+      "title": "Wann kommt ihr?",
+      "arrive": "Wir kommen an am",
+      "time": "Etwa",
+      "leave": "Wir reisen ab am",
+      "morning": "Vormittags",
+      "afternoon": "Nachmittags",
+      "evening": "Abends"
+    },
+    "s3": {
+      "title": "Eure Anreise",
+      "mode": "Wie reist ihr an?",
+      "fly": "Flugzeug",
+      "train": "Zug",
+      "drive": "Auto",
+      "airport": "Wir landen in",
+      "psa": "Pisa",
+      "flr": "Florenz",
+      "station": "Wir kommen an am Bahnhof",
+      "smf": "San Miniato-Fucecchio",
+      "granaiolo": "Granaiolo",
+      "pickup": "Sollen wir euch abholen?",
+      "pickupYes": "Ja, gern",
+      "pickupNo": "Nein, wir kommen selbst",
+      "details": "Flug oder Zug und Ankunftszeit",
+      "detailsPlaceholder": "z. B. LH 1234, Landung 14:35"
+    },
+    "s4": {
+      "title": "Seid dabei",
+      "intro": "Die Trauung am Freitag und das Grillen am Sonntag sind gesetzt. Diese beiden helfen uns bei der Planung.",
+      "pizza": "Pizzaabend am Donnerstag",
+      "pizzaYes": "Wir sind dabei",
+      "pizzaLater": "Wir kommen später",
+      "wine": "Weinprobe am Samstag",
+      "wineText": "Ein Besuch auf einem Weingut in der Nähe. Details folgen.",
+      "wineYes": "Ja, gern",
+      "wineMaybe": "Vielleicht",
+      "wineNo": "Eher nicht"
+    },
+    "s5": {
+      "title": "Essen & Allergien",
+      "dietFor": "Essen für {name}",
+      "any": "Alles",
+      "vegetarian": "Vegetarisch",
+      "vegan": "Vegan",
+      "gluten_free": "Glutenfrei",
+      "other": "Anderes",
+      "otherLabel": "Erzählt uns mehr",
+      "allergies": "Gibt es Allergien, die wir kennen sollten?",
+      "allergiesPlaceholder": "z. B. Jonas: Nüsse"
+    },
+    "s6": {
+      "title": "Der Kühlschrank",
+      "intro": "Wir füllen die Kühlschränke, bevor ihr ankommt. Tippt an, was auf euch warten soll.",
+      "breakfast": "Frühstück",
+      "milk": "Milch",
+      "drinks": "Getränke",
+      "snacks": "Snacks",
+      "items": {
+        "coffee": "Kaffee",
+        "tea": "Tee",
+        "cereal": "Müsli",
+        "yoghurt": "Joghurt",
+        "eggs": "Eier",
+        "pastries": "Gebäck",
+        "fruit": "Obst",
+        "cows_milk": "Kuhmilch",
+        "oat_milk": "Hafermilch",
+        "soy_milk": "Sojamilch",
+        "lactose_free": "Laktosefrei",
+        "beer": "Bier",
+        "wine": "Wein",
+        "prosecco": "Prosecco",
+        "soft_drinks": "Softdrinks",
+        "sparkling_water": "Sprudelwasser",
+        "juice": "Saft",
+        "crisps": "Chips",
+        "chocolate": "Schokolade",
+        "nuts": "Nüsse",
+        "kids_snacks": "Kindersnacks"
+      },
+      "other": "Gibt es noch etwas, ohne das ihr nicht leben könnt?",
+      "otherPlaceholder": "z. B. Früchtetee, Gummibärchen für die Kinder"
+    },
+    "s7": {
+      "title": "Fast geschafft",
+      "coming": "Es kommen:",
+      "notComing": "Kommen nicht:",
+      "dates": "Daten:",
+      "datesValue": "{arrive} ({time}) bis {leave}",
+      "travel": "Anreise:",
+      "travelDrive": "Mit dem eigenen Auto",
+      "travelFly": "Flug nach {place}",
+      "travelTrain": "Zug nach {place}",
+      "travelPickup": ", bitte abholen",
+      "wine": "Weinprobe:",
+      "missYou": "Wir werden euch vermissen! Danke, dass ihr Bescheid gebt.",
+      "email": "E-Mail für Neuigkeiten (optional)",
+      "emailPlaceholder": "ihr@beispiel.de",
+      "emailInvalid": "Diese E-Mail-Adresse sieht nicht ganz richtig aus.",
+      "privacy": "Wir nutzen eure Antworten nur, um das Wochenende zu planen.",
+      "note": "Eine Nachricht an uns (optional)"
+    },
+    "thanks": {
+      "title": "Grazie!",
+      "text": "Eure Antwort ist angekommen. Wir freuen uns riesig, euch in der Toskana zu sehen.",
+      "textNotComing": "Danke, dass ihr Bescheid gebt. Wir stoßen in der Toskana auf euch an.",
+      "already": "Ihr habt schon geantwortet. Möchtet ihr etwas ändern?",
+      "change": "Antworten ändern"
+    }
+  },
+  "sticky": "Zusagen",
+  "footer": {
+    "line": "Wir freuen uns auf euch",
+    "names": "Éadaoin & Sebastian",
+    "contact": "Fragen? {contact}"
+  }
+}
